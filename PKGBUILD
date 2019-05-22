@@ -26,7 +26,8 @@ source=(ftp://alpha.gnu.org/gnu/grub/${_srcname}-${pkgver}.tar.gz{,.sig}
         grub-inode-size.patch
         ext4.patch
         grub-0.97-ldflags-objcopy-remove-build-id.patch
-        automake-pkglib.patch)
+        automake-pkglib.patch
+        grub-fcat.patch)
 backup=('boot/grub/menu.lst')
 sha1sums=('2580626c4579bd99336d3af4482c346c95dac4fb'
           'SKIP'
@@ -41,7 +42,8 @@ sha1sums=('2580626c4579bd99336d3af4482c346c95dac4fb'
           '0436aa6fa0b6f768289172f983a3f4b69384629e'
           'a36f34e51efed540f1ddafd78e9c9f6d83e4c8d4'
           '61c4b58d2eaa3c1561d8e9d8fc41341ce8882869'
-          '776ed278eb8ff80e949834f763fad68b8741e7cd')
+          '776ed278eb8ff80e949834f763fad68b8741e7cd'
+	  'SKIP')
 validpgpkeys=('1C2F76A695C9C8DCA55E4A431DDAE7A2FE06BDEF') # Yoshinori K. Okuji <SURNAME at gnu org>
 
 build() {

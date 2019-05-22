@@ -1,0 +1,64 @@
+diff -Nur grub-0.97-orig/stage2/builtins.c grub-0.97/stage2/builtins.c
+--- grub-0.97-orig/stage2/builtins.c	2006-01-24 20:54:55.000000000 +0100
++++ grub-0.97/stage2/builtins.c	2006-01-26 20:08:10.000000000 +0100
+@@ -398,6 +398,52 @@
+ };
+ 
+ 
++/* catf */
++static int
++catf_func (char *arg, int flags)
++{
++  char c;
++
++  if (! grub_open (arg))
++    return 1;
++
++  while (grub_read (&c, 1))
++    {
++      if (c == '\t') 
++        {
++	  grub_read (&c, 1);
++	  if (c == 0x11) {
++	    cls();
++	  } else if (c == 0x22) {
++	    c = getkey();
++	    if (c == 'q') break;
++	    if (c == 27) {
++	      grub_close();
++	      return 1;
++	    }
++	  } else {
++	    console_current_color = c;
++	  }
++        }
++      else
++	{
++	  grub_putchar (c);
++	}
++    }  
++  grub_close ();
++  return 0;
++}
++
++static struct builtin builtin_catf =
++{
++  "catf",
++  catf_func,
++  BUILTIN_CMDLINE | BUILTIN_HELP_LIST,
++  "catf FILE",
++  "Print the contents of a specially formatted file FILE."
++};
++
++
+ /* chainloader */
+ static int
+ chainloader_func (char *arg, int flags)
+@@ -4801,6 +4847,7 @@
+   &builtin_bootp,
+ #endif /* SUPPORT_NETBOOT */
+   &builtin_cat,
++  &builtin_catf,
+   &builtin_chainloader,
+   &builtin_cmp,
+   &builtin_color,
